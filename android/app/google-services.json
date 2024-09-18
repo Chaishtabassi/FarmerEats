@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "384053865632",
+    "project_id": "farmereats-2653a",
+    "storage_bucket": "farmereats-2653a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:384053865632:android:54495c1e712ecd8924adc5",
+        "android_client_info": {
+          "package_name": "com.farmereats"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR_6etqVwtqHaHm1k-aHSCtplBvz_c1e0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

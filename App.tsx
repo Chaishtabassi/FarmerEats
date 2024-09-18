@@ -1,0 +1,20 @@
+import React from 'react';
+import { StyleSheet, Text, View, Alert } from 'react-native';
+import Stacknavigation from './Src/Navigation/Stacknavigation';
+
+const App = () => {
+
+  return (
+    <View style={styles.container}>
+      <Stacknavigation />
+    </View>
+  );
+};
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
