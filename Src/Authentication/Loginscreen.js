@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
-import Login_Api from '../API/Authapi'; 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Loginscreen = ({ navigation }) => {
@@ -8,26 +7,43 @@ const Loginscreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
+    navigation.replace('AppDrawer');
+    const url = 'https://dairy-api.ptindia.org/api/auth/login';
+    const bodyData = {
+        email: email,
+        password: password,
+    };
+
     try {
-      const result = await Login_Api(email, password);
-  
-      if (result.message == 'Login successful.') {
-        Alert.alert('Login successful', result.message);
-      } else {
-        Alert.alert('Login failed', result.message);
-      }
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bodyData),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            Alert.alert('Login Failed', data.msg || 'An error occurred. Please try again.');
+            return;
+        }
+
+        console.log('Login successful:', data);
+        navigation.replace('AppDrawer');
     } catch (error) {
-      Alert.alert('Login Error', 'An error occurred while logging in. Please try again.');
-      console.error('Login Error:', error);
+        console.error('Error during login:', error);
+        Alert.alert('Error', 'An error occurred. Please try again.');
     }
-  };
+};
 
   const Navigateforgot = () => {
-    navigation.navigate('Forgot');
+    // navigation.navigate('Forgot');
   };
 
   const Signup = () => {
-    navigation.navigate('SignUp');
+    // navigation.navigate('SignUp');
   };
 
   return (

@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import Stacknavigation from './Src/Navigation/Stacknavigation';
+import 'react-native-gesture-handler';
+import { NotificationServices, requestUserPermission } from './Src/Navigation/PushNotifications';
 
 const App = () => {
+
+  useEffect(() => {
+    requestUserPermission();
+    NotificationServices();
+  }, []);
 
   return (
     <View style={styles.container}>

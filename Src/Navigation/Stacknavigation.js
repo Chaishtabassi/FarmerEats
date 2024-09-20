@@ -1,23 +1,132 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Splashscreen from '../Authentication/Splashscreen'
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider as PaperProvider } from 'react-native-paper';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Provider as PaperProvider } from 'react-native-paper';
+import Homescreen from '../Screen/Homescreen';
+import Servicesscreen from '../Screen/Servicesscreen';
+import Cartscreen from '../Screen/Cartscreen';
+import Profilescreen from '../Screen/Profilescreen';
 import Loginscreen from '../Authentication/Loginscreen';
-import Forgotscreen from '../Authentication/Forgotscreen';
-import VerifyOtp from '../Authentication/VerifyOtp';
-import ResetPassword from '../Authentication/ResetPassword';
-import SIgnUpscreen from '../Authentication/SIgnUpscreen';
-import Farminfo from '../Authentication/Farminfo';
-import VerificationProof from '../Authentication/VerificationProof';
-import BusinessHours from '../Authentication/BusinessHours';
-import Completionsignup from '../Authentication/Completionsignup';
+import Splashscreen from '../Authentication/Splashscreen';
+import Crousalscreen from '../Authentication/Crousalscreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Drawercontent from '../Navigation/Drawercontent'
+import Tablescreen from '../Screen/Tablescreen';
+
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+
+const BottomTabNavigation = ({ navigation }) => {
+    const commonHeaderLeft = () => (
+        <Ionicons
+            name="menu"
+            size={30}
+            color="#fff"
+            style={{ marginLeft: 10, top: 2 }}
+            onPress={() => navigation.openDrawer()}
+        />
+    );
+
+    return (
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ color, size }) => {
+                    let iconName;
+
+                    switch (route.name) {
+                        case 'Home':
+                            iconName = 'home';
+                            break;
+                        case 'Services':
+                            iconName = 'shopping-bag';
+                            break;
+                        case 'Cart':
+                            iconName = 'shopping-cart';
+                            break;
+                        case 'Profile':
+                            iconName = 'user-o';
+                            break;
+                        default:
+                            iconName = 'question';
+                    }
+
+                    return <FontAwesome name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: '#D5715B',
+                tabBarInactiveTintColor: '#gray',
+            })}
+        >
+            <Tab.Screen
+                name="Home"
+                component={Homescreen}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Dashboard',
+                    headerStyle: { backgroundColor: '#D5715B' },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: { fontWeight: 'bold' },
+                    headerLeft: commonHeaderLeft,
+                }}
+            />
+            <Tab.Screen
+                name="Services"
+                component={Servicesscreen}
+                options={{
+                    headerShown: true,
+                    headerStyle: { backgroundColor: '#D5715B' },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: { fontWeight: 'bold' },
+                    headerLeft: commonHeaderLeft,
+                }}
+            />
+            <Tab.Screen
+                name="Cart"
+                component={Cartscreen}
+                options={{
+                    headerShown: true,
+                    headerStyle: { backgroundColor: '#D5715B' },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: { fontWeight: 'bold' },
+                    headerLeft: commonHeaderLeft,
+                }}
+            />
+            <Tab.Screen
+                name="Profile"
+                component={Profilescreen}
+                options={{
+                    headerShown: true,
+                    headerStyle: { backgroundColor: '#D5715B' },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: { fontWeight: 'bold' },
+                    headerLeft: commonHeaderLeft,
+                }}
+            />
+        </Tab.Navigator>
+    );
+};
+
+const DrawerNavigation = () => {
+    return (
+        <Drawer.Navigator drawerContent={() => <Drawercontent />}>
+            <Drawer.Screen
+                name="Dashboard"
+                component={BottomTabNavigation}
+                options={{
+                    headerShown: false,
+                    headerStyle: { backgroundColor: '#D5715B' },
+                    headerTintColor: '#fff',
+                    headerTitleStyle: { fontWeight: 'bold' },
+                }}
+            />
+        </Drawer.Navigator>
+    );
+};
 
 const Stacknavigation = () => {
-
-    const Stack = createNativeStackNavigator();
-
     return (
         <NavigationContainer>
             <PaperProvider>
@@ -28,56 +137,34 @@ const Stacknavigation = () => {
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
+                        name="Crousal"
+                        component={Crousalscreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
                         name="Login"
                         component={Loginscreen}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen
-                        name="Forgot"
-                        component={Forgotscreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="VerifyOtp"
-                        component={VerifyOtp}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Reset"
-                        component={ResetPassword}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="SignUp"
-                        component={SIgnUpscreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Farminfo"
-                        component={Farminfo}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Verification"
-                        component={VerificationProof}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Business"
-                        component={BusinessHours}
+                        name="AppDrawer"
+                        component={DrawerNavigation}
                         options={{ headerShown: false }}
                     />
                      <Stack.Screen
-                        name="Complete"
-                        component={Completionsignup}
-                        options={{ headerShown: false }}
+                        name="Table"
+                        component={Tablescreen}
+                        options={{
+                            headerShown: true,
+                            headerStyle: { backgroundColor: '#D5715B' },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: { fontWeight: 'bold' },
+                        }}
                     />
                 </Stack.Navigator>
             </PaperProvider>
         </NavigationContainer>
-    )
-}
+    );
+};
 
-export default Stacknavigation
-
-const styles = StyleSheet.create({})
+export default Stacknavigation;
