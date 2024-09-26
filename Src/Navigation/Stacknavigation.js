@@ -14,7 +14,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Drawercontent from '../Navigation/Drawercontent'
-import Tablescreen from '../Screen/Tablescreen';
+import ResetPassword from '../Authentication/ResetPassword';
+import Deliverynotes from '../Screen/Purchase/Deliverynotes';
+import Deliverynotesitem from '../Screen/Purchase/Deliverynotesitem';
+import Dailyexpence from '../Screen/Finance/Dailyexpence';
+import Dailycollection from '../Screen/Finance/Dailycollection';
+import Addexpense from '../Screen/Finance/Addexpense';
+import Addcollection from '../Screen/Finance/Addcollection';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -146,14 +152,69 @@ const Stacknavigation = () => {
                         component={Loginscreen}
                         options={{ headerShown: false }}
                     />
+                     <Stack.Screen
+                        name="Reset"
+                        component={ResetPassword}
+                        options={{ headerShown: false }}
+                    />
                     <Stack.Screen
                         name="AppDrawer"
                         component={DrawerNavigation}
                         options={{ headerShown: false }}
                     />
                      <Stack.Screen
-                        name="Table"
-                        component={Tablescreen}
+                        name="Delivery Notes"
+                        component={Deliverynotes}
+                        options={{
+                            headerShown: true,
+                            headerStyle: { backgroundColor: '#D5715B' },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: { fontWeight: 'bold' },
+                        }}
+                    />
+                        <Stack.Screen
+                        name="Delivery Notes Items"
+                        component={Deliverynotesitem}
+                        options={{
+                            headerShown: true,
+                            headerStyle: { backgroundColor: '#D5715B' },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: { fontWeight: 'bold' },
+                        }}
+                    />
+                         <Stack.Screen
+                        name="Daily Expense"
+                        component={Dailyexpence}
+                        options={{
+                            headerShown: true,
+                            headerStyle: { backgroundColor: '#D5715B' },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: { fontWeight: 'bold' },
+                        }}
+                    />
+                         <Stack.Screen
+                        name="Daily Collection"
+                        component={Dailycollection}
+                        options={{
+                            headerShown: true,
+                            headerStyle: { backgroundColor: '#D5715B' },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: { fontWeight: 'bold' },
+                        }}
+                    />
+                        <Stack.Screen
+                        name="Add Expense"
+                        component={Addexpense}
+                        options={{
+                            headerShown: true,
+                            headerStyle: { backgroundColor: '#D5715B' },
+                            headerTintColor: '#fff',
+                            headerTitleStyle: { fontWeight: 'bold' },
+                        }}
+                    />
+                      <Stack.Screen
+                        name="Add Collection"
+                        component={Addcollection}
                         options={{
                             headerShown: true,
                             headerStyle: { backgroundColor: '#D5715B' },

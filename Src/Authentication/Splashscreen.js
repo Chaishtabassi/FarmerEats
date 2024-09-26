@@ -17,7 +17,7 @@ const Splashscreen = () => {
       <Animatable.Image
         animation="zoomIn"
         duration={2000}
-        source={require('../Assets/Farmer.png')}
+        source={require('../Assets/logo.png')}
         style={styles.logo}
         resizeMode="contain"
       />

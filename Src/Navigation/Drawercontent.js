@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Image,
@@ -7,11 +7,78 @@ import {
     Text,
 } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
-import Entypo from 'react-native-vector-icons/Entypo';
 import { useNavigation } from '@react-navigation/native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Drawercontent = props => {
     const navigation = useNavigation();
+
+    const [Purchase, setPurchase] = useState(null);
+    const [finance, setfinance] = useState(null);
+
+    const togglePurchase = index => {
+        setPurchase(Purchase === index ? null : index);
+    };
+
+    const togglefinance = index => {
+        setfinance(finance === index ? null : index);
+    };
+
+    const renderLeadSubMenu = index => {
+        if (Purchase === index) {
+            return (
+                <View style={styles.subMenu}>
+                    <TouchableOpacity
+                        style={styles.subMenuItem}
+                        onPress={() => navigation.navigate('Delivery Notes')}>
+                        <Ionicons
+                            name="folder-outline"
+                            size={20}
+                            color="#666"
+                            style={styles.icon}
+                        />
+                        <Text style={styles.subMenuText}>Delivery Notes</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
+        return null;
+    };
+
+    const renderfinanceMenu = index => {
+        if (finance === index) {
+            return (
+                <View style={styles.subMenu}>
+                    <TouchableOpacity
+                        style={styles.subMenuItem}
+                        onPress={() => navigation.navigate('Daily Expense')}>
+                        <FontAwesome
+                            name="angle-right"
+                            size={20}
+                            color="#666"
+                            style={styles.icon}
+                        />
+                        <Text style={styles.subMenuText}>Daily Expense</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.subMenuItem}
+                        onPress={() => navigation.navigate('Daily Collection')}>
+                        <FontAwesome
+                            name="angle-right"
+                            size={20}
+                            color="#666"
+                            style={styles.icon}
+                        />
+                        <Text style={styles.subMenuText}>Daily Collection</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
+        return null;
+    };
 
     return (
         <DrawerContentScrollView {...props}>
@@ -19,7 +86,7 @@ const Drawercontent = props => {
                 <Image
                     style={styles.logo}
                     resizeMode="contain"
-                    source={require('../Assets/Farmer.png')}
+                    source={require('../Assets/logo.png')}
                 />
             </View>
 
@@ -29,14 +96,54 @@ const Drawercontent = props => {
                 <Entypo name="home" size={20} color="#333" style={styles.icon} />
                 <Text style={styles.label}>Dashboard</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.drawerItem}
+                onPress={() => togglePurchase(3)}>
+                <View style={styles.drawerItem1}>
+                    <AntDesign
+                        name="setting"
+                        size={20}
+                        color="#333"
+                        style={styles.icon}
+                    />
+                    <Text style={styles.label}>Purchase</Text>
+                </View>
+                <Entypo
+                    name={Purchase === 3 ? 'chevron-down' : 'chevron-left'}
+                    size={20}
+                    color="#333"
+                />
+            </TouchableOpacity>
+            {renderLeadSubMenu(3)}
+
+            <TouchableOpacity
+                style={styles.drawerItem}
+                onPress={() => togglefinance(4)}>
+                <View style={styles.drawerItem1}>
+                    <FontAwesome
+                        name="money"
+                        size={20}
+                        color="#333"
+                        style={styles.icon}
+                    />
+                    <Text style={styles.label}>Finance</Text>
+                </View>
+                <Entypo
+                    name={finance === 3 ? 'chevron-down' : 'chevron-left'}
+                    size={20}
+                    color="#333"
+                />
+            </TouchableOpacity>
+            {renderfinanceMenu(4)}
+
             <TouchableOpacity
                 style={styles.drawerItemsingle}
-                onPress={() => navigation.navigate('Table')}>
-                <Entypo name="text-document" size={20} color="#333" style={styles.icon} />
-                <Text style={styles.label}>Table</Text>
+                onPress={() => navigation.navigate('Reset')}>
+                <AntDesign name="logout" size={20} color="#333" style={styles.icon} />
+                <Text style={styles.label}>Change Password</Text>
             </TouchableOpacity>
         </DrawerContentScrollView>
-
     );
 };
 
@@ -47,8 +154,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     logo: {
-        height: '50%',
-        width: '80%',
+        height: '100%',
+        width: '100%',
         alignSelf: 'center',
     },
     drawerItem: {
@@ -74,6 +181,15 @@ const styles = StyleSheet.create({
     },
     subMenu: {
         marginTop: 10,
+    },
+    subMenuItem: {
+        flexDirection: 'row',
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+    },
+    subMenuText: {
+        fontSize: 14,
+        color: '#333',
     },
 });
 

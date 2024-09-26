@@ -1,45 +1,36 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Login } from '../Api/Api';
+import Toast from 'react-native-toast-message';
 
 const Loginscreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    navigation.replace('AppDrawer');
-    const url = 'https://dairy-api.ptindia.org/api/auth/login';
-    const bodyData = {
-        email: email,
-        password: password,
-    };
-
+    // navigation.replace('AppDrawer');
     try {
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(bodyData),
+      const response = await Login(email,password);
+      console.log('login', response)
+      if (response.token) {
+        Toast.show({
+          text1: 'Login successful!',
+          type: 'success',
         });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            Alert.alert('Login Failed', data.msg || 'An error occurred. Please try again.');
-            return;
-        }
-
-        console.log('Login successful:', data);
         navigation.replace('AppDrawer');
+      }
     } catch (error) {
-        console.error('Error during login:', error);
-        Alert.alert('Error', 'An error occurred. Please try again.');
+      console.log(error);
+      Toast.show({
+        text1: 'Pls! check your credentials',
+        type: 'error',
+      });
     }
-};
+  };
 
   const Navigateforgot = () => {
-    // navigation.navigate('Forgot');
+    navigation.navigate('Reset');
   };
 
   const Signup = () => {
@@ -48,7 +39,7 @@ const Loginscreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.appTitle}>FarmerEats</Text>
+      <Text style={styles.appTitle}>Dairy App</Text>
 
       <Text style={styles.welcomeText}>Welcome back!</Text>
 
